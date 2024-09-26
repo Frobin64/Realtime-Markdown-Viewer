@@ -1,3 +1,4 @@
+
 var parseBold = function(str) {
   var boldRegExp = /(\*\*)(.*?)\1/;
   var stra = [];
@@ -35,11 +36,21 @@ var parseBold = function(str) {
   return str;
  }
 
+ var parseItalic = function(str) {
+  var italicRegExp = /(\*|_)(.*?)\1/;
+  var stra = [];
+  while ((stra = italicRegExp.exec(str)) !== null) {
+    str = str.replace(stra[0], '<i>' + stra[2] + '</i>')
+  }
+  return str;
+}
+
 var markdown = {
   parse: function (str, strict) {
     'use strict';
     str = parseHeadline(str);
     str = parseBold(str)
+    str = parseItalic(str);
     str = parseHorizontaleLine(str);
     str = parseLink(str);
     return str;
